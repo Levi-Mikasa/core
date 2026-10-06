@@ -1,0 +1,11 @@
+#include "resource_registry.h"
+#include <stddef.h>
+
+const ServiceResource resource_registry[] =
+{
+@RESOURCE_DATA@
+};
+
+const size_t resource_count =
+    sizeof(resource_registry) /
+    sizeof(resource_registry[0]);

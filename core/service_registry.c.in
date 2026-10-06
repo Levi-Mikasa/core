@@ -1,0 +1,16 @@
+#include <stddef.h>
+#include "service_registry.h"
+#include "resource_registry.h"
+@SERVICE_INCLUDES@
+
+
+
+
+const ServiceDefinition service_registry[] =
+{
+@SERVICE_DEFINITIONS@
+};
+
+const size_t service_count =
+    sizeof(service_registry) /
+    sizeof(service_registry[0]);

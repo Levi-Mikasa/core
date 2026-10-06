@@ -1,0 +1,34 @@
+message(STATUS ">>> Configuring LLM")
+
+file(GLOB LLM_SOURCE CONFIGURE_DEPENDS 
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c"
+)   
+
+add_library(LLM STATIC
+    ${LLM_SOURCE}
+)
+
+target_include_directories(LLM
+    PUBLIC
+    "${CMAKE_CURRENT_SOURCE_DIR}/include"
+)
+
+set_property(GLOBAL APPEND
+    PROPERTY SERVICES_REGISTRY
+    "LLM|LLM_thread|llm.h"
+)
+
+set_property(GLOBAL APPEND
+    PROPERTY RESOURCES_REGISTRY
+    "QUEUE,LLM|STT,0,LLM"
+)
+
+set_property(GLOBAL APPEND
+    PROPERTY RESOURCES_REGISTRY
+    "QUEUE,LLM|TTS,1,LLM"
+)
+
+set_property(GLOBAL APPEND
+    PROPERTY RESOURCES_REGISTRY
+    "EVENT,LLM|TTS,2,LLM"
+)

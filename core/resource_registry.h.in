@@ -1,0 +1,27 @@
+#ifndef RESOURCE_REGISTRY_H
+#define RESOURCE_REGISTRY_H
+#include <stddef.h>
+typedef enum service{
+@SERVICE_ENUM@
+}SERVICE_NAME;
+
+typedef enum {
+    DATA,
+    QUEUE,
+    EVENT,
+}TYPE;
+
+typedef struct 
+{   
+    TYPE type;
+    SERVICE_NAME thread;
+    size_t index;
+    SERVICE_NAME belong;
+    
+}ServiceResource;
+
+
+extern const size_t resource_count;
+extern const ServiceResource resource_registry[];
+
+#endif
