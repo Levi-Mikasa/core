@@ -13,6 +13,11 @@ target_include_directories(LLM
     "${CMAKE_CURRENT_SOURCE_DIR}/include"
 )
 
+target_link_libraries(LLM
+    PRIVATE
+    utils
+)
+
 set_property(GLOBAL APPEND
     PROPERTY SERVICES_REGISTRY
     "LLM|LLM_thread|llm.h"

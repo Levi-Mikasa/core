@@ -11,6 +11,12 @@ add_library(STT STATIC
 target_include_directories(STT
     PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/include"
+    utils
+)
+
+target_link_libraries(STT
+    PRIVATE
+    utils
 )
 
 set_property(GLOBAL APPEND

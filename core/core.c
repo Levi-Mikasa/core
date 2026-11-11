@@ -1,10 +1,12 @@
 #include "core.h"
 #include "service_registry.h"
 #include "resource_registry.h"
+#include "protocol.h"
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
 
 typedef struct
 {
@@ -44,7 +46,7 @@ RESOURCE* resource_create()
             }   
             if (!found)
             {           
-                QUEUE_QUBULIC *queue = malloc(sizeof(*queue));
+                QUEUE_QUBULIC *queue = QUEUE_INIT();
                 resource[i].x = queue;
             }
                     
@@ -66,7 +68,7 @@ RESOURCE* resource_create()
             } 
             if (!found)
             {
-                QUEUE_QUBULIC *event = malloc(sizeof(*event));
+                EVENT_PUBULIC* event = EVENT_INIT();
                 resource[i].x = event;
             }
             
@@ -89,7 +91,8 @@ RESOURCE* resource_create()
             } 
             if (!found)
             {
-                QUEUE_QUBULIC *data = malloc(sizeof(*data));
+                DATA_PUBULIC* data = DATA_INIT();
+
                 resource[i].x = data;
             }
             
@@ -107,36 +110,40 @@ RESOURCE* resource_create()
 
 }
 
-void* DATA_create(SERVICE_NAME THREAD ,RESOURCE* resource)
+void* DATA_create(SERVICE_NAME THREAD, RESOURCE* resource)
 {
-    void** arg = NULL;
-    size_t max_index = 0;
+    size_t arg_count = 0;
+    size_t i = 0;
     for (size_t i = 0; i < resource_count; ++i)
     {
         if (resource[i].belong & THREAD)
         {
-            if (max_index < resource[i].index )
+            if (arg_count <= resource[i].index)
             {
-                max_index = resource[i].index;
+                arg_count = resource[i].index + 1;
             }
-            
         }
-        
     }
-    arg = calloc(max_index,sizeof(void*));
-    
+    if (arg_count == 0)
+    {
+        return NULL;
+    }
+     void** arg = calloc(arg_count, sizeof(void*));
+   
+
+    if (arg_count != 0 && arg == NULL)
+    {
+        return NULL;
+    }
+
     for (size_t i = 0; i < resource_count; ++i)
     {
-        /* 找到元数据 */
         if (resource[i].belong & THREAD)
         {
             arg[resource[i].index] = resource[i].x;
-
-        
         }
-        
     }
-    
+
     return arg;
 }
 

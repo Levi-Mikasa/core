@@ -8,6 +8,7 @@ add_subdirectory(service)
 message(STATUS "SERVICES ROOT = ${SERVICES}")
 
 add_subdirectory(core)
+add_subdirectory(utils)
 
 add_executable(test main.c)
 

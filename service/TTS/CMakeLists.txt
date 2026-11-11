@@ -13,6 +13,11 @@ target_include_directories(TTS
     "${CMAKE_CURRENT_SOURCE_DIR}/include"
 )
 
+target_link_libraries(TTS
+    PRIVATE
+    utils
+)
+
 set_property(GLOBAL APPEND
     PROPERTY SERVICES_REGISTRY
     "TTS|TTS_thread|tts.h"

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "protocol.h"
 
 void* MODEL_thread(void* arg)
 {

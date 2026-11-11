@@ -4,11 +4,17 @@ file(GLOB MODEL_SOURCE CONFIGURE_DEPEND
 
 add_library(MODEL STATIC
     ${MODEL_SOURCE}
+
 )
 
 target_include_directories(MODEL
     PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/include"
+)
+
+target_link_libraries(MODEL
+    PRIVATE
+    utils
 )
 
 set_property(GLOBAL APPEND
